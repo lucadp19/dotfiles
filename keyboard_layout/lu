@@ -1,0 +1,48 @@
+// based on a keyboard map from an 'xkb/symbols/gb' file
+
+default  partial alphanumeric_keys
+xkb_symbols "basic" {
+
+    // My main custom layout
+    // All of the most important symbols are on the third layer
+    // activated through CapsLock
+    name[Group1]="English (with custom keybinds)";
+    include "gb(intl)"
+    
+
+    key <AE02>	{ [         2,   quotedbl,  twosuperior,    oneeighth ]	};
+
+    key <AD01>	{ [         q,          Q,           at,  Greek_OMEGA ]	};
+    key <AD02>	{ [         w,          W,       dollar,      Lstroke ]	};
+    key <AD03>	{ [         e,          E,   numbersign,            E ]	};
+    key <AD04>	{ [         r,          R,  asciicircum,   registered ]	};
+    key <AD05>	{ [         t,          T,    ampersand,       Tslash ]	};
+    key <AD06>	{ [         y,          Y,          bar,          yen ]	};
+    key <AD07>	{ [         u,          U,        equal,      uparrow ]	};
+    key <AD08>	{ [         i,          I,     asterisk,     Ooblique ]	};
+    key <AD09>	{ [         o,          O,        minus,     Ooblique ]	};
+    key <AD10>	{ [         p,          P,         plus,        THORN ]	};
+    key <AD11>	{ [    0xff08,     0xffff,       0xff08,       0xffff ] }; // backspace delete
+    
+    key <AC01>	{ [         a,          A,           ae,           AE ]	};
+    key <AC02>	{ [         s,          S,    braceleft,      section ]	};
+    key <AC03>	{ [         d,          D,  bracketleft,          ETH ]	};
+    key <AC04>	{ [         f,          F,    parenleft,  ordfeminine ]	};
+    key <AC05>	{ [         g,          G,         less,          ENG ]	};
+    key <AC06>	{ [         h,          H,      greater,      Hstroke ]	};
+    key <AC07>	{ [         j,          J,   parenright,    dead_horn ] };
+    key <AC08>	{ [         k,          K, bracketright,    ampersand ]	};
+    key <AC09>	{ [         l,          L,   braceright,      Lstroke ]	};
+    key <AC10>	{ [ semicolon,      colon,   underscore, dead_doubleacute ]	};
+    key <AC11>	{ [apostrophe, quotedbl, dead_circumflex,  dead_caron ]	};
+    
+    key <AB01>	{ [         z,          Z,   asciitilde,         less ]	};
+    key <AB02>	{ [         x,          X,           at,      greater ]	};
+    key <AB03>	{ [         c,          C,     EuroSign,    copyright ]	};
+    key <AB04>	{ [         v,          V,        grave, leftsinglequotemark ]	};
+    key <AB05>	{ [         b,          B,            b, rightsinglequotemark ] };
+    key <AB06>	{ [         n,          N,   numbersign,            N ]	};
+    key <AB07>	{ [         m,          M,      percent,    masculine ]	};
+    
+    include "level3(caps_switch)"
+};
