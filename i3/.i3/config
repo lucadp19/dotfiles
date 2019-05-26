@@ -5,6 +5,8 @@ set $shutdown sudo -A shutdown -h now
 set $reboot sudo -A reboot
 set $netrefresh --no-startup-id sudo -A systemctl restart NetworkManager
 
+#exec --no-startup-id ~/.config/wpg/wp_init.sh
+
 # Dropdown windows
 for_window [instance="dropdown_*"] floating enable
 for_window [instance="dropdown_*"] move scratchpad
@@ -363,13 +365,13 @@ bar {
 
     colors {
         background $color0
-        statusline $color3
+        statusline $color6
         separator  $color7
 
 #                      border  backgr. text
-        focused_workspace  $color7 $color2 $color7
+        focused_workspace  $color7 $color4 $color7
         active_workspace   $color7 $color0 $color7
-        inactive_workspace $color5 $color0 $color5
+        inactive_workspace $color7 $color0 $color7
         binding_mode       #16a085 #2C2C2C #F9FAF9
         urgent_workspace   #16a085 #FDF6E3 #E5201D
     }
