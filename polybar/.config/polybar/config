@@ -16,6 +16,9 @@ color13 = ${xrdb:color13}
 color14 = ${xrdb:color14}
 color15 = ${xrdb:color15}
 
+[settings]
+screenchange-reload = true
+
 [global/wm]
 margin-top = 21
 margin-bottom = 21

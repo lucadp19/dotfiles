@@ -348,37 +348,42 @@ exec_always --no-startup-id fix_xcursor
 # to:
 # background $term_background
 # Same logic applied to everything else.
-# Start i3bar to display a workspace bar (plus the system information i3status if available)
-bar {
-	i3bar_command i3bar
-	status_command i3status
-	position bottom
 
+
+# Polybar
+exec_always --no-startup-id $HOME/.i3/polybar.sh &
+
+# Start i3bar to display a workspace bar (plus the system information i3status if available)
+# bar {
+#	i3bar_command i3bar
+#	status_command i3status
+#	position bottom
+#
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
 #	tray_output primary
 #	tray_output eDP1
-
-	bindsym button4 nop
-	bindsym button5 nop
-   font xft:Source Code Pro, FontAwesom5Free 11
-	strip_workspace_numbers yes
-
-    colors {
-        background $color0
-        statusline $color6
-        separator  $color7
-
+#
+#	bindsym button4 nop
+#	bindsym button5 nop
+#  font xft:Source Code Pro, FontAwesom5Free 11
+#	strip_workspace_numbers yes
+#
+#    colors {
+#        background $color0
+#        statusline $color6
+#        separator  $color7
+#
 #                      border  backgr. text
-        focused_workspace  $color7 $color4 $color7
-        active_workspace   $color7 $color0 $color7
-        inactive_workspace $color7 $color0 $color7
-        binding_mode       #16a085 #2C2C2C #F9FAF9
-        urgent_workspace   #16a085 #FDF6E3 #E5201D
-    }
-}
+#        focused_workspace  $color7 $color4 $color7
+#        active_workspace   $color7 $color0 $color7
+#        inactive_workspace $color7 $color0 $color7
+#        binding_mode       #16a085 #2C2C2C #F9FAF9
+#        urgent_workspace   #16a085 #FDF6E3 #E5201D
+#    }
+#}
 
 # hide/unhide i3status bar
-bindsym $mod+m bar mode toggle
+#bindsym $mod+m bar mode toggle
 
 #############################
 ### settings for i3-gaps: ###
