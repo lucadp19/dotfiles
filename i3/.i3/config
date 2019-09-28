@@ -27,7 +27,7 @@ font xft:URWGothic-Book 11
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec termite
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -238,6 +238,7 @@ bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 # assign [class="Pale moon"] $ws2
 # assign [class="Pcmanfm"] $ws3
 # assign [class="Skype"] $ws5
+assign [class="vlc"] $ws5
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1
@@ -351,39 +352,39 @@ exec_always --no-startup-id fix_xcursor
 
 
 # Polybar
-exec_always --no-startup-id $HOME/.i3/polybar.sh &
+# exec_always --no-startup-id $HOME/.i3/polybar.sh &
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
-# bar {
-#	i3bar_command i3bar
-#	status_command i3status
-#	position bottom
-#
+ bar {
+	i3bar_command i3bar
+	status_command i3status
+	position bottom
+
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-#	tray_output primary
-#	tray_output eDP1
-#
-#	bindsym button4 nop
-#	bindsym button5 nop
-#  font xft:Source Code Pro, FontAwesom5Free 11
-#	strip_workspace_numbers yes
-#
-#    colors {
-#        background $color0
-#        statusline $color6
-#        separator  $color7
-#
-#                      border  backgr. text
-#        focused_workspace  $color7 $color4 $color7
-#        active_workspace   $color7 $color0 $color7
-#        inactive_workspace $color7 $color0 $color7
-#        binding_mode       #16a085 #2C2C2C #F9FAF9
-#        urgent_workspace   #16a085 #FDF6E3 #E5201D
-#    }
-#}
+	tray_output primary
+	tray_output eDP1
+
+	bindsym button4 nop
+	bindsym button5 nop
+  font xft:Source Code Pro, FontAwesom5Free 11
+	strip_workspace_numbers yes
+
+    colors {
+        background $color0
+        statusline $color6
+        separator  $color7
+
+#                          border  backgr. text
+        focused_workspace  $color7 $color4 $color7
+        active_workspace   $color7 $color0 $color7
+        inactive_workspace $color7 $color0 $color7
+        binding_mode       #16a085 #2C2C2C #F9FAF9
+        urgent_workspace   #16a085 #FDF6E3 #E5201D
+    }
+}
 
 # hide/unhide i3status bar
-#bindsym $mod+m bar mode toggle
+bindsym $mod+m bar mode toggle
 
 #############################
 ### settings for i3-gaps: ###

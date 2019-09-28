@@ -52,7 +52,7 @@ window:
   decorations: full
 
   # When true, alacritty starts maximized.
-  start_maximized: false
+  # start_maximized: false
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -122,7 +122,7 @@ font:
     #style: Italic
 
   # Point size
-  size: 13
+  size: 11
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -154,10 +154,10 @@ font:
   use_thin_strokes: true
 
 # Display the time it takes to redraw each frame.
-render_timer: false
+debug.render_timer: false
 
 # Keep the log file after quitting Alacritty.
-persistent_logging: false
+debug.persistent_logging: false
 
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
@@ -165,7 +165,7 @@ draw_bold_text_with_bright_colors: true
 # Nord theme
 colors:
   primary:
-    background: '0x3B4252' # '0x2E3440'
+    background: '0x2E3440' # '0x2E3440'
     foreground: '0xD8DEE9'
   cursor:
     text: '0x2E3440'
