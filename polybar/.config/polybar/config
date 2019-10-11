@@ -80,12 +80,12 @@ line-color = #f00
 ; Number of spaces to add at the beginning/end of the bar
 ; Individual side values can be defined using:
 ;   padding-{left,right}
-padding-right = 2
+padding-right = 1
 
 ; Number of spaces to add before/after each module
 ; Individual side values can be defined using:
 ;   module-margin-{left,right}
-module-margin = 1
+module-margin = 1px
 
 ; Fonts are defined using <font-name>;<vertical-offset>
 ; Font names are specified using a fontconfig pattern.
@@ -94,7 +94,8 @@ module-margin = 1
 ;   font-2 = Termsynu:size=8;-1
 ;   font-3 = FontAwesome:size=10
 ; See the Fonts wiki page for more details
-font-0 = Inconsolata:bold:size=10;1.5
+; font-0 = Inconsolata:style=Bold:size=10;0
+font-0 = Fira Code:style=Regular:size=8;2
 font-1 = FontAwesome5Free:style=Solid:size=9;2
 font-2 = FontAwesome5Brands:style=Regular:size=10;2
 font-3 = FontAwesome5Free:style=Regular:size=9;2
@@ -105,11 +106,11 @@ font-3 = FontAwesome5Free:style=Regular:size=9;2
 ;   modules-right = ipc clock
 modules-left = i3
 modules-center = 
-modules-right = spotify sep wireless-network sep memory sep cpu sep date sep
+modules-right = spotify wireless-network memory cpu battery date 
 
 
 ; The separator will be inserted between the output of each module
-separator =
+separator = "/"
 
 ; This value is used to add extra spacing between elements
 ; @deprecated: This parameter will be removed in an upcoming version
@@ -264,7 +265,7 @@ interval = 1.0
 
 ; See "http://en.cppreference.com/w/cpp/io/manip/put_time" for details on how to format the date string
 ; NOTE: if you want to use syntax tags here you need to use %%{...}
-date = %Y-%m-%d%
+date = %d/%m/%y
 
 ; Optional time format
 time = %H:%M
@@ -274,7 +275,7 @@ time = %H:%M
 date-alt = %A, %d %B %Y
 time-alt = %H:%M:%S
 
-label = %date% %time% 
+label = %time% 
 label-font = 0
 label-foreground = #fff
 
@@ -395,3 +396,31 @@ margin = 0
 [module/sep]
 inherit = module/decor-glyph
 content = "/"
+
+[module/battery]
+type = internal/battery
+
+full-at = 99
+battery = BAT1
+adapter = ACAD
+
+format-charging = <ramp-capacity> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <ramp-capacity> <label-full>
+
+label-full = %percentage%%
+label-charging = %percentage%%
+label-discharging = %percentage%%
+
+bar-capacity-width = 5
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-5 = 
+
+label-full-foreground = ${xrdb:color2}
+label-charging-foreground = ${xrdb:color3}
+label-discharging-foreground = ${xrdb:color1}
