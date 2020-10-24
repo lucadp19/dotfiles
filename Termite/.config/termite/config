@@ -40,4 +40,5 @@ color15 = #eceff4
 
 
 [options]
-font = Fira Code 13
+# font = Fira Code 13
+font = Iosevka 12
