@@ -1,0 +1,8 @@
+build
+.stack*
+*.yaml*
+xmobar*
+xmonad-*
+*.o
+*.errors
+*.hi
