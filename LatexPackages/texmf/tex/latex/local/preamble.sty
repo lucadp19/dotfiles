@@ -10,14 +10,18 @@
 \usepackage{float}
 \usepackage{letltxmacro}
 \usepackage{geometry}
-\usepackage{listings}
+
+% \usepackage[dvipsnames]{xcolor}     % for code background
+\usepackage{listings}               % for formal grammars
+\usepackage{minted}                 % for code
+\usepackage{proof}                  % for inference rules
 
 \LetLtxMacro\amsproof\proof
 \LetLtxMacro\amsendproof\endproof
 
 \usepackage[style=arsclassica, pdfspacing, eulermath]{classicthesis}
 
-\usepackage{thmtools}
+\usepackage{thmtools, thm-restate}
 \usepackage[framemethod=TikZ]{mdframed}
 \usepackage{tikz-cd}
 
@@ -28,18 +32,23 @@
 
 \renewcommand\large{\@setfontsize\large{11.5pt}{18}}
 
-\renewcommand\formatchapter[1]{% 
-    \begin{minipage}[b]{0.15\linewidth}
-    \chapterNumber
-    \end{minipage}%
-    \begin{minipage}[b]{0.6\linewidth}
-    \raggedright\spacedallcaps{#1}
-    \end{minipage}
-} 
 
-\renewcommand*{\chapterformat}{%
-    \mbox{\chapappifchapterprefix{\nobreakspace}%
-    \scalebox{2}{\color{gray}\thechapter\autodot}\enskip}
+\@ifundefined{chapter}{
+    % empty
+    % article classes
+}{
+    \renewcommand\formatchapter[1]{% 
+        \begin{minipage}[b]{0.15\linewidth}
+        \chapterNumber
+        \end{minipage}%
+        \begin{minipage}[b]{0.6\linewidth}
+        \raggedright\spacedallcaps{#1}
+        \end{minipage}
+    }
+    \renewcommand*{\chapterformat}{%
+        \mbox{\chapappifchapterprefix{\nobreakspace}%
+        \scalebox{2}{\color{gray}\thechapter\autodot}\enskip}
+    }
 }
 
 \renewenvironment{proof}[1][\proofname]
@@ -138,6 +147,12 @@
 % To work with systems of equations
 \newcolumntype{z}{r<{{}}}
 \newcolumntype{o}{@{}>{{}}c<{{}}@{}}
+
+% Strong emphasis
+\newcommand{\strong}[1]{\@strong{#1}}
+\newcommand{\@@strong}[1]{\textbf{\let\@strong\@@@strong#1}}
+\newcommand{\@@@strong}[1]{\textnormal{\let\@strong\@@strong#1}}
+\let\@strong\@@strong
 
 % --------------------------------------------------------------------- $
 %                            SMART SET BUILDER                          %
@@ -352,7 +367,7 @@
     \IfValueT{#4}
         {_{#4}}
 }
-%
+\DeclarePairedDelimiter{\EvaluateAt}{.}{\rvert}
 
 
 % --------------------------------------------------------------------- $
@@ -412,9 +427,9 @@
 }
 \NewDocumentCommand{\GrpIndex}{som}{                % subgroup index
     \IfBooleanTF{#1}{
-        \squared*{\IndexArgs{#3}}
+        \squared*{\Split@Colon{#3}}
     }{
-        \squared[#2]{\IndexArgs{#3}}
+        \squared[#2]{\Split@Colon{#3}}
     }
 }
 \NewDocumentCommand{\Normaliser}{s e_ o m}{           % normaliser of a subgroup
@@ -453,16 +468,28 @@
 }
 
 %       RING THEORY         %
-\newcommand{\units}[1]{#1^{\times}}                      % group of units of a ring
-\DeclarePairedDelimiter{\ideal}()                   % ideal subring
+\newcommand{\Nilpotents}{\mathfrak{N}}
+\newcommand{\ZeroDiv}{\mathfrak{D}}
+\newcommand{\units}[1]{#1^{\times}}                  % group of units of a ring
+\DeclarePairedDelimiterX{\ideal}[1](){               % ideal subring
+    \, #1 \,
+}
+\newcommand{\Rad}[1]{\sqrt{#1}}
+\NewDocumentCommand{\IdealDiv}{s o m}{
+    \IfBooleanTF{#1}{
+        \ideal*{\Split@Colon{#3}}
+    }{
+        \ideal[#2]{\Split@Colon{#3}}
+    }
+}
 
 %       FIELD THEORY        %
 \newcommand{\ext}[1]{\ExtArgs{#1}}                  % field extensions 
 \NewDocumentCommand{\ExtDegree}{som}{               % degree of field extension
     \IfBooleanTF{#1}{
-        \squared*{\IndexArgs{#3}}
+        \squared*{\Split@Colon{#3}}
     }{
-        \squared[#2]{\IndexArgs{#3}}
+        \squared[#2]{\Split@Colon{#3}}
     }
 }
 
@@ -527,8 +554,8 @@
 }
 \NewDocumentCommand{\ExtArgs}{>{\SplitArgument{1}{/}}m}{\ExtArgsAux#1}
 \NewDocumentCommand{\ExtArgsAux}{mm}{#1\, / \, #2}
-\NewDocumentCommand{\IndexArgs}{>{\SplitArgument{1}{:}}m}{\IndexArgsAux#1}
-\NewDocumentCommand{\IndexArgsAux}{mm}{#1\, : \, #2}
+\NewDocumentCommand{\Split@Colon}{>{\SplitArgument{1}{:}}m}{\Split@ColonAux#1}
+\NewDocumentCommand{\Split@ColonAux}{mm}{#1\, : \, #2}
 
 
 % --------------------------------------------------------------------- $
@@ -536,8 +563,8 @@
 % --------------------------------------------------------------------- %
 
 % Descriptive statistics
-\NewDocumentCommand{\var}{t+ s o m}{        % variance
-    \operatorname{var}
+\NewDocumentCommand{\Var}{t+ s o m}{        % variance
+    \operatorname{Var}
     \IfBooleanT{#1}{
         _e
     }
@@ -679,18 +706,33 @@
 % --------------------------------------------------------------------- $
 %                                 PROG II                               %
 % --------------------------------------------------------------------- %
+\usemintedstyle{manni}
+\setminted{
+    % bgcolor=lightgray,
+    fontsize=\small,
+    breaklines=true,
+    % escapeinside=||,
+    mathescape=true,
+    frame=single
+}
+\newmintinline[InlineJava]{java}{}
+\newminted[Java]{java}{}
+\newmintinline[InlineOCaml]{ocaml}{}
+\newminted[OCaml]{ocaml}{}
 
-\newcommand{\InlineJava}[1]{\lstinline[language=Java]{#1}}
-\lstnewenvironment{Java}{
-    \lstset{ %
-            language=Java,
-            showstringspaces=false,
-            upquote=true,
-            aboveskip=5pt,
-            belowskip=5pt,
-            breaklines=true,
-            commentstyle=\rmfamily,
+\newcommand{\Eval}[1]{\operatorname{Eval}\parens*{#1}}
+\newcommand{\Subst}[1]{\operatorname{subst}\parens*{#1}}
+
+\lstnewenvironment{BNF}{
+    \lstset{
+        basicstyle=\footnotesize,
+        xleftmargin=3em,
+        literate={::=}{$\Coloneqq$}{3}
     }
 }{}
 
+\newmintinline[mtext]{text}{fontsize=\normalsize}
+\newcommand{\mt}[1]{\text{\mtext{#1}}}
+\newcommand{\proves}{\vdash}
+\newcommand{\sstep}{\shortrightarrow}
 \endinput
