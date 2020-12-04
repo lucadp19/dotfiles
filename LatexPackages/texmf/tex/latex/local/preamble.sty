@@ -482,6 +482,14 @@
         \ideal[#2]{\Split@Colon{#3}}
     }
 }
+\NewDocumentCommand{\content}{s o m}{
+    \operatorname{c}
+    \IfBooleanTF{#1}{
+        \parens*{#3}
+    }{
+        \parens[#2]{#3}
+    }
+}
 
 %       FIELD THEORY        %
 \newcommand{\ext}[1]{\ExtArgs{#1}}                  % field extensions 
@@ -634,7 +642,8 @@
         #1 \StupidBarGiven #2 % change to \ColonGiven to get the bar
     }
 }
-
+\newcommand{\NullHp}{\HH_0)\;}
+\newcommand{\AltHp}{\HH_1)\;}
 
 % Widebar
 \DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
@@ -720,6 +729,16 @@
 \newmintinline[InlineOCaml]{ocaml}{}
 \newminted[OCaml]{ocaml}{}
 
+\NewDocumentCommand{\env}{s o g}{
+    \operatorname{env}
+    \IfValueT{#3}{
+        \IfBooleanTF{#1}{
+            \parens*{#3}
+        }{
+            \parens[#2]{#3}
+        }
+    }
+}
 \newcommand{\Eval}[1]{\operatorname{Eval}\parens*{#1}}
 \newcommand{\Subst}[1]{\operatorname{subst}\parens*{#1}}
 
@@ -735,4 +754,7 @@
 \newcommand{\mt}[1]{\text{\mtext{#1}}}
 \newcommand{\proves}{\vdash}
 \newcommand{\sstep}{\shortrightarrow}
+\newcommand{\evaluatesTo}{\Rightarrow}
+\newcommand{\envTo}{{}\triangleright{}}
+
 \endinput
