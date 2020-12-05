@@ -262,7 +262,7 @@ myKeys =
         [ ("M-C-r", spawn "xmonad --recompile")
         , ("M-S-r", spawn "xmonad --restart")
         , ("M-C-q", io exitSuccess)
-        , ("M-C-p", sudo -A shutdown -h now)
+        , ("M-C-p", spawn "sudo -A shutdown -h now")
     -- Open terminal
         , ("M-<Return>", spawn myTerminal)
     
