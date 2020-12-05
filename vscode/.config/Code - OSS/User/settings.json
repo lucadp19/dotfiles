@@ -1,0 +1,85 @@
+{
+    // Exiting vim insert mode with jj
+    // "vim.insertModeKeyBindingsNonRecursive": [
+    //     {
+    //         "before": ["j", "j"],
+    //         "after": ["<Esc>"]
+    //     }
+    // ],
+
+    // Using space in vim normal mode for easymotion
+    // "vim.easymotion": true,
+    // "vim.normalModeKeyBindings": [
+    //     {
+    //         "before": [" "],
+    //         "after": ["<leader>","<leader>","<leader>","b","d","w"]
+    //     }
+    // ],
+
+    // Editor settings
+    "editor.fontFamily": "iosevka",
+    "editor.fontLigatures": true,
+    "editor.acceptSuggestionOnEnter": "off",
+    "workbench.activityBar.visible": true,
+    "window.menuBarVisibility": "toggle",
+    "workbench.colorTheme": "Nord",
+    "window.zoomLevel": 0,
+
+    // Python related settings
+    // "python.pythonPath": "python3",
+
+    // Latex settings
+    "latex-workshop.view.pdf.viewer": "tab",
+    // "sync.gist": "473859d2d241e9bd87d7dd32b0118795",
+    "breadcrumbs.enabled": true,
+    "editor.lineNumbers": "relative",
+    "[latex]": {
+        "editor.wordWrap": "on"
+    },
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "editor.fontSize": 16,
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "latex-workshop.latex.tools": [
+      {
+        "name": "latexmk",
+        "command": "latexmk",
+        "args": [
+          "-synctex=1",
+          "-interaction=nonstopmode",
+          "-file-line-error",
+          "--shell-escape",
+          "-pdf",
+          "%DOC%"
+        ]
+      },
+      {
+        "name": "pdflatex",
+        "command": "pdflatex",
+        "args": [
+          "--shell-escape",
+          "-synctex=1",
+          "-interaction=nonstopmode",
+          "-file-line-error",
+          "%DOC%"
+        ]
+      },
+      {
+        "name": "bibtex",
+        "command": "bibtex",
+        "args": [
+          "%DOCFILE%"
+        ],
+        "env": {}
+      }
+    ],
+
+    "[arm]": {
+        "editor.tabSize": 2,
+    }    
+}
