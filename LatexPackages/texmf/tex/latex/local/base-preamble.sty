@@ -1,20 +1,17 @@
 % \ProvidePackage{preamble}[2020/10/07 1.0.0 General preamble]
 
-\usepackage{amsmath, amsthm, amssymb, cases, mathtools, bm, nicefrac}
+\usepackage{amsmath, amsthm, amssymb, cases, mathtools, bm, nicefrac} % general math
 \usepackage{stmaryrd}               % for \trianglelefteqslant and to create \xmapsfrom
 \usepackage{array, multicol}
 \usepackage{centernot}              % for \centernot
-\usepackage{faktor}                 % for \faktor
+% \usepackage{faktor}                 % for \faktor
+\usepackage[makeroom]{cancel}  
 \usepackage{xparse}
-\usepackage{enumitem}
+\usepackage[shortlabels]{enumitem}
 \usepackage{float}
 \usepackage{letltxmacro}
 \usepackage{geometry}
-
-% \usepackage[dvipsnames]{xcolor}     % for code background
-\usepackage{listings}               % for formal grammars
-\usepackage{minted}                 % for code
-\usepackage{proof}                  % for inference rules
+\usepackage{standalone}
 
 \LetLtxMacro\amsproof\proof
 \LetLtxMacro\amsendproof\endproof
@@ -24,9 +21,12 @@
 \usepackage{thmtools, thm-restate}
 \usepackage[framemethod=TikZ]{mdframed}
 \usepackage{tikz-cd}
+\usetikzlibrary{shapes}
 
 \usepackage{hyperref} % must be second-to-last package
 \usepackage{cleveref} % must be last package
+
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
 
 \restylefloat{table}
 
@@ -67,6 +67,11 @@
         #1\@addpunct{.\hspace{1em}}]\ignorespaces}
     {\popQED\endlist\@endpefalse}
 
+% <******************************************************> %
+% <******************* THEOREM STYLES *******************> %
+% <******************************************************> %
+
+% <* thmstyle *> %
 \declaretheoremstyle[
     spaceabove=2\topsep, spacebelow=2\topsep,
     headindent=0pt,
@@ -86,6 +91,7 @@
 \declaretheorem[name=Proposizione, sibling=theorem, style=thmstyle]{proposition}
 \declaretheorem[name=Lemma, sibling=theorem, style=thmstyle]{lemma}
 
+% <* defstyle *> %
 \declaretheoremstyle[
     spaceabove=2\topsep, spacebelow=2\topsep,
     headindent=0pt,
@@ -99,16 +105,18 @@
 ]{defstyle}
 \declaretheorem[name=Definizione, sibling=theorem, style=defstyle]{definition}
 
+% <* exmplstyle *> %
 \declaretheoremstyle[
     spaceabove=\topsep, spacebelow=\topsep,
     headfont=\bfseries,
-    notefont=\small\normalfont\bfseries, notebraces={}{.},
+    notefont=\small\normalfont\bfseries, notebraces={(}{)},
     bodyfont=\small\normalfont,
     % qed={$\lrcorner$},
     postheadspace=1em
 ]{exmplstyle}
 \declaretheorem[name=Esempio, sibling=theorem, style=exmplstyle]{example}
 
+% <* exercisestyle *> %
 \declaretheoremstyle[
     spaceabove=2\topsep, spacebelow=2\topsep,
     headfont=\bfseries,
@@ -121,6 +129,7 @@
 ]{exercisestyle}
 \declaretheorem[name=Esercizio, sibling=theorem, style=exercisestyle]{exercise}
 
+% <* solutionstyle *> %
 \declaretheoremstyle[
     spaceabove=2\topsep, spacebelow=2\topsep,
     headfont=\itshape,
@@ -134,6 +143,7 @@
 \declaretheorem[name=Soluzione, style=solutionstyle, numbered=no]{solution}
 \declaretheorem[name=Intuizione, style=solutionstyle, numbered=no]{intuition}
 
+% <* remarkstyle *> %
 \declaretheoremstyle[
     spaceabove=\topsep, spacebelow=\topsep,
     headfont=\bfseries,
@@ -143,6 +153,20 @@
 ]{remarkstyle}
 \declaretheorem[name=Osservazione, style=remarkstyle, numberwithin=section]{remark}
 
+% <* notationstyle *> %
+\declaretheoremstyle[
+    spaceabove=\topsep, spacebelow=\topsep,
+    headfont=\bfseries,
+    notefont=\normalfont\normalsize\bfseries, notebraces={}{.},
+    bodyfont=\normalfont\normalsize,
+    postheadspace=1em
+]{notationstyle}
+\declaretheorem[name=Notazione, style=notationstyle, numbered=no]{notation}
+
+
+% <******************************************************> %
+% <****************** GENERAL COMMANDS ******************> %
+% <******************************************************> %
 
 % To work with systems of equations
 \newcolumntype{z}{r<{{}}}
@@ -154,9 +178,7 @@
 \newcommand{\@@@strong}[1]{\textnormal{\let\@strong\@@strong#1}}
 \let\@strong\@@strong
 
-% --------------------------------------------------------------------- $
-%                            SMART SET BUILDER                          %
-% --------------------------------------------------------------------- %
+% <****** SET THEORY ******> $
 \newcommand{\given}{}
 \newcommand{\ColonGiven}{
     \nonscript\> : \allowbreak\nonscript\>\mathopen{}
@@ -172,9 +194,9 @@
 } % ES: { x | x > 0 }
 
 % To create a new set, just use $\set{x, y}$ or $\set{x \given x > 0}$
-\DeclarePairedDelimiterX{\set}[1]{\{}{\}}{\,\setargs{#1}\,}
-\NewDocumentCommand{\setargs}{>{\SplitArgument{1}{\given}}m}{\setargsaux#1}
-\NewDocumentCommand{\setargsaux}{mm}{
+\DeclarePairedDelimiterX{\set}[1]{\{}{\}}{\,\Set@rgs{#1}\,}
+\NewDocumentCommand{\Set@rgs}{>{\SplitArgument{1}{\given}}m}{\Set@rgs@ux#1}
+\NewDocumentCommand{\Set@rgs@ux}{mm}{
     \IfNoValueTF{#2}{
         #1
     } {
@@ -200,7 +222,6 @@
 \newcommand{\bigdisjunion}{\bigsqcup}           % big disjoint union
 \newcommand{\compl}{^C}                         % set complement
 
-
 % Intervals
 \NewDocumentCommand{\interval}{ s m >{\SplitArgument{1}{,}}m m o }{
     \IfBooleanTF{#1}{
@@ -222,14 +243,28 @@
 \renewcommand{\rho}{\varrho}
 \let\oldphi\phi
 \renewcommand{\phi}{\varphi}
+\newcommand{\eulerphi}{\oldphi}
 
 % Useful general paired delimiters
 \DeclarePairedDelimiter{\parens}{(}{)}
 \DeclarePairedDelimiter{\squared}{[}{]}
+\DeclarePairedDelimiter{\dbracket}{\llbracket}{\rrbracket}
 \DeclarePairedDelimiter{\curly}{\{}{\}}
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}   % absolute value
-\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}  % norm
 \DeclarePairedDelimiter{\ang}{\langle}{\rangle} % angular parenthesis
+\NewDocumentCommand{\norm}{sog}{                % norm (with automatic \cdot inside if empty)
+    \IfValueTF{#3}{
+        \IfBooleanTF{#1}{
+            \norm@delim*{#3}
+        }{
+            \norm@delim[#2]{#3}
+        }
+    }{
+        \norm@delim{\cdot}
+    }
+}
+\DeclarePairedDelimiter{\norm@delim}{\lVert}{\rVert}
+
 
 % Modified equals
 \newcommand{\deq}{\coloneqq}
@@ -248,6 +283,16 @@
 \newcommand{\Imm}[1]{\operatorname{Im} #1}  % image of a function
 \newcommand\restrict[1]                     % function restriction
     {\raisebox{-.5ex}{$|$}_{#1}}
+\NewDocumentCommand{\sgn}{sog}{
+    \operatorname{sgn}
+    \IfValueT{#3}{
+        \IfBooleanTF{#1}{
+            \parens*{#3}
+        } {
+            \parens[#2]{#3}
+        }
+    }
+}
 
 % Complex numbers
 \let\oldre\Re
@@ -279,14 +324,30 @@
     $\m@th#1\nmid$\cr%
   }%
 }
-% \newcommand{\divides}{\mid}                 % divides
-% \newcommand{\ndivides}{\nmid}               % doesn't divide
+
 \newcommand{\congr}{\equiv}                 % congruent 
 \newcommand{\ncongr}{\not\congr}            % not congruent
-\newcommand{\Mod}[1]{\ \left(#1\right)}     % (mod m) without "mod"
+\NewDocumentCommand{\Mod}{t+ som}{          % (mod m) with or without "mod"
+    \;
+    \IfBooleanTF{#1}{
+        \IfBooleanTF{#2}{
+            \parens*{\operatorname{mod} #4}
+        }{
+            \parens[#3]{\operatorname{mod} #4}
+        }
+    }{
+        \IfBooleanTF{#2}{
+            \parens*{#4}
+        }{
+            \parens[#3]{#4}
+        }
+    }
+}     
+\newcommand{\gcdname@}{\operatorname{gcd}}
+\newcommand{\lcmname@}{\operatorname{lcm}}
 \RenewDocumentCommand{\gcd}{t+ som}{        % gcd - greatest common divisor
     \IfBooleanT{#1}{
-        \operatorname{gcd}
+        \gcdname@
     }
     \IfBooleanTF{#2}{
         \parens*{#4}
@@ -300,7 +361,7 @@
 }
 \NewDocumentCommand{\lcm}{t+ som}{          % lcm - least common multiple
     \IfBooleanTF{#1}{
-        \operatorname{lcm}
+        \lcmname@
         \IfBooleanTF{#2}{
             \parens*{#4}
         }{
@@ -322,9 +383,8 @@
         }
     }
 }
-\newcommand{\eulerPhi}{\oldphi}
 
-\NewDocumentCommand{\eqcl}{t+ s o m d[]}{
+\NewDocumentCommand{\eqcl}{t+ s o m e_}{
     \IfBooleanTF{#1}{
         \overline{#4}
     }{
@@ -343,23 +403,6 @@
     }
 }
 
-% --------------------------------------------------------------------- $
-%                                 ANALYSIS                              %
-% --------------------------------------------------------------------- %
-
-% Topological symbols
-\newcommand{\interior}[1]{\mathring{#1}}
-\newcommand{\closure}[1]{\overline{#1}}
-\DeclarePairedDelimiterXPP{\derived}[1]{\mathcal{D}}(){}{#1}
-\NewDocumentCommand{\ball}{t+ E{_}{\eps} s m o}{
-    \IfBooleanTF{#1}
-        {\bar B}
-        {B}
-    _{#2}
-    \IfBooleanTF{#3}
-        {\parens*{#4}}
-        {\parens[#5]{#4}}
-}
 \NewDocumentCommand{\seqn}{s o m e_}{
     \IfBooleanTF{#1}
         {\parens*{#3}}
@@ -367,143 +410,34 @@
     \IfValueT{#4}
         {_{#4}}
 }
-\DeclarePairedDelimiter{\EvaluateAt}{.}{\rvert}
+% \NewDocumentCommand{\EvaluateAt}{t+ s o m}{
+%     \IfBooleanTF{#1}{
+%         \IfBooleanTF{#2}{
+%             \@VertEvaluateAt*{#4}
+%         }{
+%             \@VertEvaluateAt[#3]{#4}
+%         }{
+%             \IfBooleanTF{#2}{
+%                 \@SqEvaluateAt*{#4}
+%             }{
+%                 \@SqEvaluateAt[#3]{#4}
+%             }
+%         }
+%     }
+%     % \IfValueT{#5}{
+%     %     _{#5}
+%     % }
+%     % \IfValueT{#6}{
+%     %     ^{#6}
+%     % }
+% }
+\newcommand{\EvaluateAt}{\@SqEvaluateAt}
+\DeclarePairedDelimiter{\@SqEvaluateAt}[]
+\DeclarePairedDelimiter{\@VertEvaluateAt}{.}{\rvert}
 
-
-% --------------------------------------------------------------------- $
-%                                 ALGEBRA                               %
-% --------------------------------------------------------------------- %
-
-%           GENERAL         %
-\newcommand{\isomorph}{\simeq}                      % isomorph
-% \newcommand{\quot}[2]{{#1}/_{#2}}                   % quotient object
-\newcommand{\quot}[2]{
-    \mathchoice
-        {   %displaystyle
-            {\left.\raisebox{.15em}{$#1$}\middle/\raisebox{-.15em}{$#2$}\right.}
-        } { % textstyle
-            {\left.\raisebox{.1em}{\text{\small $#1$}}\middle/\raisebox{-.1em}{\text{\small $#2$}}\right.}
-        } { % scriptstyle
-            #1/#2
-        } { % scriptstyle
-            #1/#2
-        }
-}
-
-%       HOMOMORPHISMS       %
-\newcommand{\Hom}{\operatorname{Hom}\parens}         % Homomorphism set
-\newcommand{\End}{\operatorname{End}\parens}         % Endomorphism set
-\newcommand{\Inn}{\operatorname{Inn}\parens}         % Inner automorphism set
-\newcommand{\Aut}{\operatorname{Aut}\parens}         % Automorphism set
-
-%       GROUP THEORY        %
-\newcommand{\sgr}{\leq}                             % subgroup
-\newcommand{\normal}{\triangleleft}                 % normal subgroup
-% \newcommand{\normal}{\trianglelefteqslant}        % normal subgroup (triangle eq slant)
-\NewDocumentCommand{\Zentr}{s e_ o m}{              % center of a group or centralizer of a subgroup
-    \operatorname{Z}
-    \IfNoValueF{#2}{
-        _{#2}
-    }
-    \IfBooleanTF{#1}{
-        \parens*{#4}
-    }{
-        \parens[#3]{#4}
-    }
-}
-\NewDocumentCommand{\ord}{s e_ o m}{                  % order of an element of a group
-    \operatorname{ord}
-    \IfNoValueF{#2}{
-        _{#2}
-    }
-    \IfBooleanTF{#1}{
-        \parens*{#4}
-    }{
-        \parens[#3]{#4}
-    }
-}  
-\DeclarePairedDelimiterX{\gen}[1]<>{              % generators of a group
-    \,\GenArgs{#1}\,
-}
-\NewDocumentCommand{\GrpIndex}{som}{                % subgroup index
-    \IfBooleanTF{#1}{
-        \squared*{\Split@Colon{#3}}
-    }{
-        \squared[#2]{\Split@Colon{#3}}
-    }
-}
-\NewDocumentCommand{\Normaliser}{s e_ o m}{           % normaliser of a subgroup
-    \operatorname{N}
-    \IfNoValueF{#2}{
-        _{#2}
-    }
-    \IfBooleanTF{#1}{
-        \parens*{#4}
-    }{
-        \parens[#3]{#4}
-    }
-}
-\NewDocumentCommand{\Cl}{s e_ o m}{                 % conjugacy class
-    \operatorname{Cl}
-    \IfNoValueF{#2}{
-        _{#2}
-    }
-    \IfBooleanTF{#1}{
-        \parens*{#4}
-    }{
-        \parens[#3]{#4}
-    }
-}
-\newcommand{\orb}[1]{\operatorname{orb}\parens*{#1}}% orbit
-\NewDocumentCommand{\Stab}{s e_ o m}{                 % stabilizer
-    \operatorname{Stab}
-    \IfNoValueF{#2}{
-        _{#2}
-    }
-    \IfBooleanTF{#1}{
-        \parens*{#4}
-    }{
-        \parens[#3]{#4}
-    }
-}
-
-%       RING THEORY         %
-\newcommand{\Nilpotents}{\mathfrak{N}}
-\newcommand{\ZeroDiv}{\mathfrak{D}}
-\newcommand{\units}[1]{#1^{\times}}                  % group of units of a ring
-\DeclarePairedDelimiterX{\ideal}[1](){               % ideal subring
-    \, #1 \,
-}
-\newcommand{\Rad}[1]{\sqrt{#1}}
-\NewDocumentCommand{\IdealDiv}{s o m}{
-    \IfBooleanTF{#1}{
-        \ideal*{\Split@Colon{#3}}
-    }{
-        \ideal[#2]{\Split@Colon{#3}}
-    }
-}
-\NewDocumentCommand{\content}{s o m}{
-    \operatorname{c}
-    \IfBooleanTF{#1}{
-        \parens*{#3}
-    }{
-        \parens[#2]{#3}
-    }
-}
-
-%       FIELD THEORY        %
-\newcommand{\ext}[1]{\ExtArgs{#1}}                  % field extensions 
-\NewDocumentCommand{\ExtDegree}{som}{               % degree of field extension
-    \IfBooleanTF{#1}{
-        \squared*{\Split@Colon{#3}}
-    }{
-        \squared[#2]{\Split@Colon{#3}}
-    }
-}
-
-%       LINEAR ALGEBRA      %
-\renewcommand{\vec}[1]{\bm{#1}}                     % vector
+\renewcommand{\vec}[1]{\mathbold{#1}}                     % vector
 \newcommand{\trans}{^T}                             % transposed
+\newcommand{\ctrans}{^H}                            % complex transposed
 \NewDocumentCommand{\Span}{t+ som}{                 % Span of vectors
     \operatorname{span}
     \IfBooleanTF{#1}{
@@ -520,130 +454,6 @@
         }
     }
 }
-\NewDocumentCommand{\GL}{s e_ o m}{                   % General Linear group
-    \operatorname{GL}
-    \IfValueT{#2}{
-        _{#2}
-    }
-    \IfBooleanTF{#1}{
-        \parens*{#4}
-    }{
-        \parens[#3]{#4}
-    }
-}
-\NewDocumentCommand{\SL}{s e_ o m}{                   % Special Linear group
-    \operatorname{SL}
-    \IfNoValueF{#2}{
-        _{#2}
-    }
-    \IfBooleanTF{#1}{
-        \parens*{#4}
-    }{
-        \parens[#3]{#4}
-    }
-}
-\NewDocumentCommand{\Mat}{som}{                     % Matrix ring
-    \operatorname{Mat}
-    \IfBooleanTF{#1}{
-        \parens*{#3}
-    }{
-        \parens[#2]{#3}
-    }
-}
-
-%       AUXILIARY COMMANDS     %
-\NewDocumentCommand{\GenArgs}{>{\SplitArgument{1}{\given}}m}{\GenArgsAux#1}
-\NewDocumentCommand{\GenArgsAux}{mm}{
-    \IfNoValueTF{#2}{
-        #1
-    } {
-        #1 \BarGiven #2 % change to \ColonGiven to get the bar
-    }
-}
-\NewDocumentCommand{\ExtArgs}{>{\SplitArgument{1}{/}}m}{\ExtArgsAux#1}
-\NewDocumentCommand{\ExtArgsAux}{mm}{#1\, / \, #2}
-\NewDocumentCommand{\Split@Colon}{>{\SplitArgument{1}{:}}m}{\Split@ColonAux#1}
-\NewDocumentCommand{\Split@ColonAux}{mm}{#1\, : \, #2}
-
-
-% --------------------------------------------------------------------- $
-%                               PROBABILITY                             %
-% --------------------------------------------------------------------- %
-
-% Descriptive statistics
-\NewDocumentCommand{\Var}{t+ s o m}{        % variance
-    \operatorname{Var}
-    \IfBooleanT{#1}{
-        _e
-    }
-    \IfBooleanTF{#2}{
-        \parens*{#4}
-    } {
-        \parens[#3]{#4}
-    }
-}
-\NewDocumentCommand{\sd}{t+ s o m}{               % standard deviation
-    \sigma
-    \IfBooleanT{#1}{
-        _e
-    }
-    \IfBooleanTF{#2}{
-        \parens*{#4}
-    } {
-        \parens[#3]{#4}
-    }
-}
-\NewDocumentCommand{\cov}{t+ s o m}{              % covariance
-    \operatorname{cov}
-    \IfBooleanT{#1}{
-        _e
-    }
-    \IfBooleanTF{#2}{
-        \parens*{#4}
-    } {
-        \parens[#3]{#4}
-    }
-}
-\newcommand{\mean}[1]{\vec{\bar{#1}}}
-
-% \DeclarePairedDelimiterXPP{\Prob}[1]{\P}(){}{\ProbArgs{#1}}       % probability
-\NewDocumentCommand{\Prob}{s e_ o g}{
-    \mathbb{P}
-    \IfValueT{#2}{
-        _{#2}
-    }
-    \IfValueT{#4}{
-        \IfBooleanTF{#1}{
-            \parens*{\ProbArgs{#4}}
-        }{
-            \parens[#3]{\ProbArgs{#4}}
-        }
-    }
-}
-\NewDocumentCommand{\Expect}{s e_ o g}{
-    \mathbb{E}
-    \IfValueT{#2}{
-        _{#2}
-    }
-    \IfValueT{#4}{
-        \IfBooleanTF{#1}{
-            \squared*{#4}
-        }{
-            \squared[#3]{#4}
-        }
-    }
-}
-
-\NewDocumentCommand{\ProbArgs}{>{\SplitArgument{1}{\given}}m}{\ProbArgsAux#1}
-\NewDocumentCommand{\ProbArgsAux}{mm}{
-    \IfNoValueTF{#2}{
-        #1
-    } {
-        #1 \StupidBarGiven #2 % change to \ColonGiven to get the bar
-    }
-}
-\newcommand{\NullHp}{\HH_0)\;}
-\newcommand{\AltHp}{\HH_1)\;}
 
 % Widebar
 \DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
@@ -653,7 +463,6 @@
 \renewcommand{\bar}[1]{\widebar{#1}}
 
 \newcommand{\vecbar}[1]{\vec{\bar{#1}}}
-
 
 % MATHBB LETTERS
 \newcommand{\A}{\mathbb{A}}
@@ -711,50 +520,5 @@
 \newcommand{\XX}{\mathcal{X}}
 \newcommand{\YY}{\mathcal{Y}}
 \newcommand{\ZZ}{\mathcal{Z}}
-
-% --------------------------------------------------------------------- $
-%                                 PROG II                               %
-% --------------------------------------------------------------------- %
-\usemintedstyle{manni}
-\setminted{
-    % bgcolor=lightgray,
-    fontsize=\small,
-    breaklines=true,
-    % escapeinside=||,
-    mathescape=true,
-    frame=single
-}
-\newmintinline[InlineJava]{java}{}
-\newminted[Java]{java}{}
-\newmintinline[InlineOCaml]{ocaml}{}
-\newminted[OCaml]{ocaml}{}
-
-\NewDocumentCommand{\env}{s o g}{
-    \operatorname{env}
-    \IfValueT{#3}{
-        \IfBooleanTF{#1}{
-            \parens*{#3}
-        }{
-            \parens[#2]{#3}
-        }
-    }
-}
-\newcommand{\Eval}[1]{\operatorname{Eval}\parens*{#1}}
-\newcommand{\Subst}[1]{\operatorname{subst}\parens*{#1}}
-
-\lstnewenvironment{BNF}{
-    \lstset{
-        basicstyle=\footnotesize,
-        xleftmargin=3em,
-        literate={::=}{$\Coloneqq$}{3}
-    }
-}{}
-
-\newmintinline[mtext]{text}{fontsize=\normalsize}
-\newcommand{\mt}[1]{\text{\mtext{#1}}}
-\newcommand{\proves}{\vdash}
-\newcommand{\sstep}{\shortrightarrow}
-\newcommand{\evaluatesTo}{\Rightarrow}
-\newcommand{\envTo}{{}\triangleright{}}
 
 \endinput

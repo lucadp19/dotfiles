@@ -1,0 +1,82 @@
+\usepackage{base-preamble}
+
+% Descriptive statistics
+\NewDocumentCommand{\Var}{t+ s o m}{        % variance
+    \operatorname{Var}
+    \IfBooleanT{#1}{
+        _e
+    }
+    \IfBooleanTF{#2}{
+        \parens*{#4}
+    } {
+        \parens[#3]{#4}
+    }
+}
+\NewDocumentCommand{\sd}{t+ s o m}{               % standard deviation
+    \sigma
+    \IfBooleanT{#1}{
+        _e
+    }
+    \IfBooleanTF{#2}{
+        \parens*{#4}
+    } {
+        \parens[#3]{#4}
+    }
+}
+\NewDocumentCommand{\cov}{t+ s o m}{              % covariance
+    \operatorname{cov}
+    \IfBooleanT{#1}{
+        _e
+    }
+    \IfBooleanTF{#2}{
+        \parens*{#4}
+    } {
+        \parens[#3]{#4}
+    }
+}
+\newcommand{\mean}[1]{\vec{\bar{#1}}}
+
+% \DeclarePairedDelimiterXPP{\Prob}[1]{\P}(){}{\ProbArgs{#1}}       % probability
+\NewDocumentCommand{\Prob}{s e_ o g}{
+    \mathbb{P}
+    \IfValueT{#2}{
+        _{#2}
+    }
+    \IfValueT{#4}{
+        \IfBooleanTF{#1}{
+            \parens*{\ProbArgs{#4}}
+        }{
+            \parens[#3]{\ProbArgs{#4}}
+        }
+    }
+}
+\NewDocumentCommand{\Expect}{s e_ o g}{
+    \mathbb{E}
+    \IfValueT{#2}{
+        _{#2}
+    }
+    \IfValueT{#4}{
+        \IfBooleanTF{#1}{
+            \squared*{#4}
+        }{
+            \squared[#3]{#4}
+        }
+    }
+}
+
+\NewDocumentCommand{\ProbArgs}{>{\SplitArgument{1}{\given}}m}{\ProbArgsAux#1}
+\NewDocumentCommand{\ProbArgsAux}{mm}{
+    \IfNoValueTF{#2}{
+        #1
+    } {
+        #1 \StupidBarGiven #2 % change to \ColonGiven to get the bar
+    }
+}
+
+\DeclarePairedDelimiterXPP{\NormalDist}[1]
+    {\NN}(){}{#1}
+
+\newcommand{\NullHp}{\HH_0)\;}
+\newcommand{\AltHp}{\HH_1)\;}
+
+\endinput

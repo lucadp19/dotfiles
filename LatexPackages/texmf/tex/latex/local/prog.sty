@@ -1,0 +1,58 @@
+\usepackage{base-preamble}
+% \usepackage[dvipsnames]{xcolor}     % for code background
+\usepackage{listings}               % for formal grammars
+\usepackage{minted}                 % for code
+\usepackage{proof}                  % for inference rules
+\usepackage{drawstack}              % for stack frames
+% --------------------------------------------------------------------- $
+%                                 PROG II                               %
+% --------------------------------------------------------------------- %
+\usemintedstyle{manni}
+\setminted{
+    % bgcolor=lightgray,
+    fontsize=\small,
+    breaklines=true,
+    % escapeinside=||,
+    mathescape=true,
+    frame=single
+}
+\newmintinline[InlineJava]{java}{fontsize=\normalsize}
+\newminted[Java]{java}{}
+\newmintinline[InlineOCaml]{ocaml}{fontsize=\normalsize}
+\newminted[OCaml]{ocaml}{}
+
+\NewDocumentCommand{\env}{s o g}{
+    \operatorname{env}
+    \IfValueT{#3}{
+        \IfBooleanTF{#1}{
+            \parens*{#3}
+        }{
+            \parens[#2]{#3}
+        }
+    }
+}
+\newcommand{\Eval}[1]{\operatorname{Eval}\parens*{#1}}
+\newcommand{\Subst}[1]{\operatorname{subst}\parens*{#1}}
+
+\lstnewenvironment{BNF}{
+    \lstset{
+        basicstyle=\footnotesize,
+        xleftmargin=3em,
+        literate={::=}{$\Coloneqq$}{3}
+    }
+}{}
+
+\newcommand{\code}{\texttt}
+
+\newmintinline[mtext]{text}{
+    fontsize=\normalsize,
+    escapeinside=||,
+    mathescape=true
+}
+\newcommand{\mt}[1]{\text{\mtext{#1}}}
+\newcommand{\proves}{\vdash}
+\newcommand{\sstep}{\shortrightarrow}
+\newcommand{\evaluatesTo}{\Rightarrow}
+\newcommand{\envTo}{\mathbin{\triangleright}}
+
+\endinput

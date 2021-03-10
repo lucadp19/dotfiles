@@ -1,0 +1,184 @@
+\usepackage{base-preamble}
+\usepackage{xspace}
+
+%           GENERAL         %
+\newcommand{\isomorph}{\simeq}                      % isomorph
+% \newcommand{\quot}[2]{{#1}/_{#2}}                   % quotient object
+\newcommand{\quot}[2]{
+    \mathchoice
+        {   %displaystyle
+            {\left.\raisebox{.15em}{$#1$}\middle/\raisebox{-.15em}{$#2$}\right.}
+        } { % textstyle
+            {\left.\raisebox{.1em}{\text{\small $#1$}}\middle/\raisebox{-.1em}{\text{\small $#2$}}\right.}
+        } { % scriptstyle
+            #1/#2
+        } { % scriptstyle
+            #1/#2
+        }
+}
+
+%       HOMOMORPHISMS       %
+\newcommand{\Hom}{\operatorname{Hom}\parens}         % Homomorphism set
+\newcommand{\End}{\operatorname{End}\parens}         % Endomorphism set
+\newcommand{\Inn}{\operatorname{Inn}\parens}         % Inner automorphism set
+\newcommand{\Aut}{\operatorname{Aut}\parens}         % Automorphism set
+
+%       GROUP THEORY        %
+\newcommand{\sgr}{\leq}                             % subgroup
+\newcommand{\normal}{\triangleleft}                 % normal subgroup
+% \newcommand{\normal}{\trianglelefteqslant}        % normal subgroup (triangle eq slant)
+\NewDocumentCommand{\Zentr}{s e_ o m}{              % center of a group or centralizer of a subgroup
+    \operatorname{Z}
+    \IfNoValueF{#2}{
+        _{#2}
+    }
+    \IfBooleanTF{#1}{
+        \parens*{#4}
+    }{
+        \parens[#3]{#4}
+    }
+}
+\NewDocumentCommand{\ord}{s e_ o m}{                  % order of an element of a group
+    \operatorname{ord}
+    \IfNoValueF{#2}{
+        _{#2}
+    }
+    \IfBooleanTF{#1}{
+        \parens*{#4}
+    }{
+        \parens[#3]{#4}
+    }
+}  
+\DeclarePairedDelimiterX{\gen}[1]<>{              % generators of a group
+    \,\GenArgs{#1}\,
+}
+\NewDocumentCommand{\GrpIndex}{som}{                % subgroup index
+    \IfBooleanTF{#1}{
+        \squared*{\Split@Colon{#3}}
+    }{
+        \squared[#2]{\Split@Colon{#3}}
+    }
+}
+\NewDocumentCommand{\Normaliser}{s e_ o m}{           % normaliser of a subgroup
+    \operatorname{N}
+    \IfNoValueF{#2}{
+        _{#2}
+    }
+    \IfBooleanTF{#1}{
+        \parens*{#4}
+    }{
+        \parens[#3]{#4}
+    }
+}
+\NewDocumentCommand{\Cl}{s e_ o m}{                 % conjugacy class
+    \operatorname{Cl}
+    \IfNoValueF{#2}{
+        _{#2}
+    }
+    \IfBooleanTF{#1}{
+        \parens*{#4}
+    }{
+        \parens[#3]{#4}
+    }
+}
+\newcommand{\orb}[1]{\operatorname{orb}\parens*{#1}}% orbit
+\NewDocumentCommand{\Stab}{s e_ o m}{                 % stabilizer
+    \operatorname{Stab}
+    \IfNoValueF{#2}{
+        _{#2}
+    }
+    \IfBooleanTF{#1}{
+        \parens*{#4}
+    }{
+        \parens[#3]{#4}
+    }
+}
+
+%       RING THEORY         %
+\newcommand{\Nilpotents}{\mathfrak{N}}
+\newcommand{\ZeroDiv}{\mathfrak{D}}
+\newcommand{\units}[1]{#1^{\times}}                  % group of units of a ring
+\DeclarePairedDelimiterX{\ideal}[1](){               % ideal subring
+    \, #1 \,
+}
+\newcommand{\Rad}[1]{\sqrt{#1}}
+\NewDocumentCommand{\IdealDiv}{s o m}{
+    \IfBooleanTF{#1}{
+        \ideal*{\Split@Colon{#3}}
+    }{
+        \ideal[#2]{\Split@Colon{#3}}
+    }
+}
+\newcommand{\UFD}{\textsc{ufd}\xspace}
+\newcommand{\PID}{\textsc{pid}\xspace}
+\newcommand{\ED}{\textsc{ed}\xspace}
+\NewDocumentCommand{\content}{s o m}{
+    \operatorname{c}
+    \IfBooleanTF{#1}{
+        \parens*{#3}
+    }{
+        \parens[#2]{#3}
+    }
+}
+
+%       FIELD THEORY        %
+\newcommand{\FieldChar}{\operatorname{char}}        % characteristic of a field
+\newcommand{\ext}[1]{\ExtArgs{#1}}                  % field extensions 
+\NewDocumentCommand{\ExtDegree}{som}{               % degree of field extension
+    \IfBooleanTF{#1}{
+        \squared*{\Split@Colon{#3}}
+    }{
+        \squared[#2]{\Split@Colon{#3}}
+    }
+}
+\providecommand{\closure}[1]{\overline{#1}}
+
+\NewDocumentCommand{\GL}{s e_ o m}{                   % General Linear group
+    \operatorname{GL}
+    \IfValueT{#2}{
+        _{#2}
+    }
+    \IfBooleanTF{#1}{
+        \parens*{#4}
+    }{
+        \parens[#3]{#4}
+    }
+}
+\NewDocumentCommand{\SL}{s e_ o m}{                   % Special Linear group
+    \operatorname{SL}
+    \IfNoValueF{#2}{
+        _{#2}
+    }
+    \IfBooleanTF{#1}{
+        \parens*{#4}
+    }{
+        \parens[#3]{#4}
+    }
+}
+\NewDocumentCommand{\Mat}{som}{                     % Matrix ring
+    \operatorname{Mat}
+    \IfBooleanTF{#1}{
+        \parens*{#3}
+    }{
+        \parens[#2]{#3}
+    }
+}
+
+%       AUXILIARY COMMANDS     %
+\NewDocumentCommand{\GenArgs}{>{\SplitArgument{1}{\given}}m}{\GenArgsAux#1}
+\NewDocumentCommand{\GenArgsAux}{mm}{
+    \IfNoValueTF{#2}{
+        #1
+    } {
+        #1 \BarGiven #2 % change to \ColonGiven to get the bar
+    }
+}
+\NewDocumentCommand{\ExtArgs}{>{\SplitArgument{1}{/}}m}{\ExtArgsAux#1}
+\NewDocumentCommand{\ExtArgsAux}{mm}{#1\, / \, #2}
+\NewDocumentCommand{\Split@Colon}{>{\SplitArgument{1}{:}}m}{\Split@ColonAux#1}
+\NewDocumentCommand{\Split@ColonAux}{mm}{#1\, : \, #2}
+
+% ALGEBRA 2 $
+
+
+\endinput

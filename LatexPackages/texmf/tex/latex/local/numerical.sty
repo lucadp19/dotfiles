@@ -1,0 +1,57 @@
+\usepackage{base-preamble}
+\usepackage{xspace}
+
+%           GENERAL         %
+\NewDocumentCommand{\MSet}{g}{
+    \FF
+    \IfValueT{#1}{
+        \parens*{#1}
+    }
+}
+\newcommand{\StandMSet}{\MSet{\beta, t, m, M}}
+\newcommand{\MSetIEEE}{\FF_{\textsc{\scriptsize{IEEE}}}}
+
+\newcommand{\IEEE}{\textsc{IEEE (754)}\xspace}
+
+\NewDocumentCommand{\trun}{sog}{
+    \operatorname{trun}
+    \IfValueT{#3}{
+        \IfBooleanTF{#1}{
+            \parens*{#3}
+        }{
+            \parens[#2]{#3}
+        }
+    }
+}
+
+\NewDocumentCommand{\arr}{sog}{
+    \operatorname{arr}
+    \IfValueT{#3}{
+        \IfBooleanTF{#1}{
+            \parens*{#3}
+        }{
+            \parens[#2]{#3}
+        }
+    }
+}
+
+\NewDocumentCommand{\fl}{sog}{
+    \operatorname{fl}
+    \IfValueT{#3}{
+        \IfBooleanTF{#1}{
+            \parens*{#3}
+        }{
+            \parens[#2]{#3}
+        }
+    }
+}
+
+\newcommand{\epsin}{\eps_{\text{in}}}
+\newcommand{\epsalg}{\eps_{\text{alg}}}
+\newcommand{\epstot}{\eps_{\text{tot}}}
+
+\NewDocumentCommand{\Split@Comma}{ >{\SplitArgument{3}{,}}m}{
+    \Split@CommaAux#1
+}
+\NewDocumentCommand{\Split@CommaAux}{mmmm}{#1,\ #2,\ #3,\ #4}
+\endinput
