@@ -1,0 +1,9 @@
+snippet mk "inline-mode" A
+\$$1\$ $0
+endsnippet
+
+snippet dm "math-mode" A
+\[
+    $1
+\]$0
+endsnippet

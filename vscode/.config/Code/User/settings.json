@@ -1,3 +1,8 @@
+// {
+//     "workbench.colorTheme": "Nord",
+//     "vscode-neovim.neovimExecutablePaths.linux": "/bin/nvim",
+//     "window.menuBarVisibility": "toggle"
+// }
 {
     // Editor settings
     // "editor.fontFamily": "Iosevka",
@@ -6,7 +11,6 @@
     "editor.acceptSuggestionOnEnter": "off",
     "workbench.activityBar.visible": true,
     "window.menuBarVisibility": "toggle",
-    "workbench.colorTheme": "Nord",
     "window.zoomLevel": 0,
     "editor.tabSize": 4,
 
@@ -40,7 +44,7 @@
     "editor.lineNumbers": "relative",
     "editor.suggestSelection": "first",
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-    "editor.fontSize": 17,
+    "editor.fontSize": 16,
     "files.exclude": {
         "**/.classpath": true,
         "**/.project": true,
@@ -122,7 +126,98 @@
             }
           },
         ]
+      },
+      "[NordPastel]": {
+        "textMateRules": [
+          {
+            "scope": [
+              "constant.other.haskell"
+            ], 
+            "settings": {
+              // "foreground": "#8fbcbb",
+              "foreground": "#88C3C2"
+            }
+          },
+          {
+            "scope": [
+              "variable.other.generic-type.haskell"
+            ],
+            "settings": {
+              // "foreground": "#FCA3AB"
+              "foreground": "#ADD3DE",
+              "fontStyle": "italic"
+            }
+          },
+          {
+            "scope": [
+              "storage.type.haskell"
+            ],
+            "settings": {
+              // "foreground": "#8eb1dd",
+              // "foreground": "#76ADAC"
+              // "foreground": "#81A1C1",
+              "foreground": "#88C0D0",
+              "fontStyle": "bold"
+            }
+          },
+          {
+            "scope": [
+              "keyword.operator.function.infix.haskell"
+            ],
+            "settings": {
+              "foreground": "#FBEBBB",
+              "fontStyle": "italic"
+            }
+          },
+          {
+            "scope": [
+              "keyword.other.preprocessor.extension.haskell"
+            ],
+            "settings": {
+              "foreground": "#5E81AC",
+              // "fontStyle": "bold"
+            }
+          },
+          {
+            "scope": [
+              "entity.name.function.haskell",
+              "meta.declaration.instance.haskell"
+              // "storage.type.haskell"
+            ], 
+            "settings": {
+              "foreground": "#88ccd0",
+              // "foreground": "#76ADAD"
+              // "foreground": "#6EB5B4"
+              // "foreground": "#EDE4C9"
+            }
+          },
+          // {
+          //   "scope": [
+          //     "entity.name.namespace.haskell"
+          //   ], 
+          //   "settings": {
+          //     "foreground": "#81a1c1",
+          //   }
+          // },
+          {
+            "scope": [
+              "meta.import.haskell"
+            ], 
+            "settings": {
+              "foreground": "#d8dee9",
+            }
+          },
+        ]
       }
     },
-    "vscode-neovim.neovimExecutablePaths.linux": "/bin/nvim"
+    "vscode-neovim.neovimExecutablePaths.linux": "/bin/nvim",
+    "agdaMode.agdaPath": "/home/lucadp/.local/bin/agda",
+    "python.languageServer": "Pylance",
+    "workbench.colorTheme": "NordPastel",
+    "C_Cpp.default.includePath": [
+      "/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include",
+      "/usr/local/include",
+      "/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed",
+      "/usr/include"
+     ]
 }

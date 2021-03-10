@@ -1,0 +1,3 @@
+snippet mk "inline-math" A
+\$$1\$ $0
+end
