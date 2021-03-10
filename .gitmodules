@@ -1,0 +1,3 @@
+[submodule "rofi/.config/rofi/rofi-blurry-powermenu"]
+	path = rofi/.config/rofi/rofi-blurry-powermenu
+	url = https://github.com/lu0/rofi-blurry-powermenu
